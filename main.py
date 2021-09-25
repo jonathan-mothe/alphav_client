@@ -26,8 +26,32 @@ class StockTimeSeries:
 
         if resp.status_code == 200:
             return resp.json()
-            
+
         raise APICallError(
             f"Não foi possivel consumir o serviço: STATUS_CODE"
             "={resp.status_code}"
         )
+
+    def daily_series(self, function, symbol, **kwargs):
+        """
+        1. Montar o path
+        2. Gerar a URL
+        3. Fazer a requisição ao AlphaVantage
+        4. response.json()
+        """
+
+    def daily_adjusted_series(self, *args, **kwargs):
+        """
+        1. Montar o path
+        2. Gerar a URL
+        3. Fazer a requisição ao AlphaVantage
+        4. response.json()
+        """
+
+    def weekly_series(self, *args, **kwargs):
+        """
+        1. Montar o path
+        2. Gerar a URL
+        3. Fazer a requisição ao AlphaVantage
+        4. response.json()
+        """

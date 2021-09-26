@@ -28,7 +28,7 @@ class StockTimeSeries:
 
         raise APICallError(
             f"Não foi possivel consumir o serviço: STATUS_CODE"
-            "={resp.status_code}"
+            f"={resp.status_code}"
         )
 
     def daily_series(self, function, symbol, **kwargs):

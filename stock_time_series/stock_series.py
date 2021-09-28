@@ -13,14 +13,7 @@ class StockTimeSeries:
     def _build_url(self, path):
         return f"{self.base_url}?{path}&apikey={self.api_key}"
 
-    def intraday_series(self, function, symbol, interval, **kwargs):
-
-        path = f"function={function}&symbol={symbol}&interval={interval}"
-        options = [f"{item[0]}={item[1]}" for item in kwargs.items()]
-        path = f"{path}&{'&'.join(options)}" if options else path
-
-        url = self._build_url(path)
-
+    def _make_request(self, url):
         resp = requests.get(url)
 
         if resp.status_code == 200:
@@ -31,26 +24,42 @@ class StockTimeSeries:
             f"={resp.status_code}"
         )
 
-    def daily_series(self, function, symbol, **kwargs):
-        """
-        1. Montar o path
-        2. Gerar a URL
-        3. Fazer a requisição ao AlphaVantage
-        4. response.json()
-        """
+    def intraday_series(self, function, symbol, interval, **kwargs):
 
-    def daily_adjusted_series(self, *args, **kwargs):
-        """
-        1. Montar o path
-        2. Gerar a URL
-        3. Fazer a requisição ao AlphaVantage
-        4. response.json()
-        """
+        path = f"function={function}&symbol={symbol}&interval={interval}"
+        options = [f"{item[0]}={item[1]}" for item in kwargs.items()]
+        path = f"{path}&{'&'.join(options)}" if options else path
+
+        url = self._build_url(path)
+
+        resp = self._make_request(url)
+
+    def daily_series(self, function, symbol, **kwargs):
+
+        path = f"function={function}&symbol={symbol}"
+        options = [f"{item[0]}={item[1]}" for item in kwargs.items()]
+        path = f"{path}&{'&'.join(options)}" if options else path
+
+        url = self._build_url(path) # gera url
+
+        resp = self._make_request(url) # faz requisição e retorna response.json()
+
+    def daily_adjusted_series(self, function, symbol, **kwargs):
+
+        path = f'function={function}&symbol={symbol}'
+        options = [f'{item[0]}={item[1]}' for item in kwargs.items()]
+        path = f"{path}&{'&'.join(options)}" if options else path
+
+        url = self._build_url(path)
+
+        resp = self._make_request(url)
 
     def weekly_series(self, *args, **kwargs):
-        """
-        1. Montar o path
-        2. Gerar a URL
-        3. Fazer a requisição ao AlphaVantage
-        4. response.json()
-        """
+
+        path = f'function={function}&symbol={symbol}'
+        options = [f'{item[0]}={item[1]}' for item in kwargs.items()]
+        path = f"{path}&{'&'.join(options)}" if options else path
+
+        url = self._build_url(path)
+
+        resp = self._make_request(url)
